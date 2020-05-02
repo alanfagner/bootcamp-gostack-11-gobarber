@@ -4,7 +4,7 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: gobarber
+      POSTGRES_DB: gostack_gobaber
     ports:
       - 5432:5432
     volumes:
