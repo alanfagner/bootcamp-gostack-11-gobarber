@@ -3,15 +3,15 @@ import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes
 
 import ListProviderMonthAvailabilityService from '@modules/appointments/services/ListProviderMonthAvailabilityService';
 
-let fakeAppointmentsRespository: FakeAppointmentsRepository;
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProviderMonthAvailability: ListProviderMonthAvailabilityService;
 
 describe('ListProviderMonthAvailability', () => {
   beforeEach(() => {
-    fakeAppointmentsRespository = new FakeAppointmentsRepository();
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
     listProviderMonthAvailability = new ListProviderMonthAvailabilityService(
-      fakeAppointmentsRespository,
+      fakeAppointmentsRepository,
     );
   });
 
@@ -20,7 +20,7 @@ describe('ListProviderMonthAvailability', () => {
     await Promise.all(
       Array.from({ length: 10 }, (_, index) => {
         const hour = index + hourStart;
-        fakeAppointmentsRespository.create({
+        fakeAppointmentsRepository.create({
           providerID: 'provider',
           userID: 'user',
           date: new Date(2020, 4, 20, hour, 0, 0),
@@ -28,7 +28,7 @@ describe('ListProviderMonthAvailability', () => {
       }),
     );
 
-    await fakeAppointmentsRespository.create({
+    await fakeAppointmentsRepository.create({
       providerID: 'provider',
       userID: 'user',
       date: new Date(2020, 4, 21, 8, 0, 0),

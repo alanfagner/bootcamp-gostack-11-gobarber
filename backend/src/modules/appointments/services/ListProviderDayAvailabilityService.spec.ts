@@ -3,26 +3,26 @@ import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes
 
 import ListProviderDayAvailabilityService from '@modules/appointments/services/ListProviderDayAvailabilityService';
 
-let fakeAppointmentsRespository: FakeAppointmentsRepository;
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProviderDayAvailability: ListProviderDayAvailabilityService;
 
 describe('ListPrroviderDayAvailability', () => {
   beforeEach(() => {
-    fakeAppointmentsRespository = new FakeAppointmentsRepository();
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
     listProviderDayAvailability = new ListProviderDayAvailabilityService(
-      fakeAppointmentsRespository,
+      fakeAppointmentsRepository,
     );
   });
 
   it('should be able to list the day availability from provider', async () => {
-    await fakeAppointmentsRespository.create({
+    await fakeAppointmentsRepository.create({
       providerID: 'provider',
       userID: 'user',
       date: new Date(2020, 4, 21, 14, 0, 0),
     });
 
-    await fakeAppointmentsRespository.create({
+    await fakeAppointmentsRepository.create({
       providerID: 'provider',
       userID: 'user',
       date: new Date(2020, 4, 21, 15, 0, 0),

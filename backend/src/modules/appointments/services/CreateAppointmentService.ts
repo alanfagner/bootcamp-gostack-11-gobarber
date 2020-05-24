@@ -1,10 +1,12 @@
-import { startOfHour, isBefore, getHours } from 'date-fns';
+import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import AppError from '@shared/errors/AppError';
+import INotificationRepository from '@modules/notifications/repositories/INotificationRepository';
 
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import AppError from '@shared/errors/AppError';
 interface IRequest {
   providerID: string;
   date: Date;
@@ -16,6 +18,12 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('NotificationRepository')
+    private notificationRepository: INotificationRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -41,6 +49,7 @@ class CreateAppointmentService {
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
+      providerID,
     );
 
     if (findAppointmentInSameDate) {
@@ -52,6 +61,20 @@ class CreateAppointmentService {
       userID,
       date: appointmentDate,
     });
+
+    const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm");
+
+    await this.notificationRepository.create({
+      recipientID: providerID,
+      content: `Novo agendamento para dia ${dateFormatted}`,
+    });
+
+    await this.cacheProvider.invalidate(
+      `provider-appointments:${providerID}:${format(
+        appointmentDate,
+        'yyyy-M-d',
+      )}`,
+    );
 
     return appointment;
   }

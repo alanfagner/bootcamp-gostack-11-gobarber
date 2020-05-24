@@ -1,18 +1,18 @@
 import 'reflect-metadata';
 
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
-import FakeUserRespository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import AppError from '@shared/errors/AppError';
 
 let fakeStorageProvider: FakeStorageProvider;
-let fakeUserRepository: FakeUserRespository;
+let fakeUserRepository: FakeUserRepository;
 let updateUserAvatar: UpdateUserAvatarService;
 
 describe('UpdateUserAvatar', () => {
   beforeEach(() => {
     fakeStorageProvider = new FakeStorageProvider();
-    fakeUserRepository = new FakeUserRespository();
+    fakeUserRepository = new FakeUserRepository();
 
     updateUserAvatar = new UpdateUserAvatarService(
       fakeUserRepository,

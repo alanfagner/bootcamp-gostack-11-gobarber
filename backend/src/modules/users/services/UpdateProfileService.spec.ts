@@ -1,19 +1,19 @@
 import 'reflect-metadata';
 
-import FakeUserRespository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 
 import AppError from '@shared/errors/AppError';
 
-let fakeUserRepository: FakeUserRespository;
+let fakeUserRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
 let updateProfileService: UpdateProfileService;
 
 describe('UpdateProfile', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider();
-    fakeUserRepository = new FakeUserRespository();
+    fakeUserRepository = new FakeUserRepository();
 
     updateProfileService = new UpdateProfileService(
       fakeUserRepository,

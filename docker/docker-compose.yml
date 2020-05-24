@@ -9,12 +9,33 @@ services:
       - 5432:5432
     volumes:
       - dbdata:/var/lib/postgresql/data
-  
+      
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+      
+  mongoExpress:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - 8081:8081
+    links:
+      - mongodb  
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
   adminer:
     image: adminer
     ports:
       - 8080:8080
     links:
       - postgres
+      - mongodb
+      
 volumes:
   dbdata:

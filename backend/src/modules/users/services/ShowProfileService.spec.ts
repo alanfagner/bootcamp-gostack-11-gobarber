@@ -1,16 +1,16 @@
 import 'reflect-metadata';
 
-import FakeUserRespository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 import AppError from '@shared/errors/AppError';
 
-let fakeUserRepository: FakeUserRespository;
+let fakeUserRepository: FakeUserRepository;
 let showProfileService: ShowProfileService;
 
 describe('ShowProfile', () => {
   beforeEach(() => {
-    fakeUserRepository = new FakeUserRespository();
+    fakeUserRepository = new FakeUserRepository();
 
     showProfileService = new ShowProfileService(fakeUserRepository);
   });
