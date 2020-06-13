@@ -21,8 +21,11 @@
 .env.test.local
 .env.production.local
 
-backend/tmp/**/*.*
-backend/tmp/*.*
+backend/tmp/**/*.png
+backend/tmp/*.png
+
+backend/tmp/**/*.jpg
+backend/tmp/*.jpg
 
 npm-debug.log*
 yarn-debug.log*
