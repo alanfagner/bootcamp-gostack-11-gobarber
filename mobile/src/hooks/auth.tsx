@@ -14,20 +14,28 @@ interface SignInCredentias {
   password: string;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatarURL?: string;
+}
+
 interface AuthState {
   token?: string;
-  user?: object;
+  user?: User;
 }
 
 interface AuthResponse {
   token: string;
-  user: object;
+  user: User;
 }
 
 interface AuthContextState {
-  user?: object;
+  user?: User;
   signIn(signInCredentias: SignInCredentias): Promise<void>;
   signOut(): void;
+  updateUser(user: User): Promise<void>;
   loading: boolean;
 }
 
@@ -44,6 +52,7 @@ const AuthProvider: React.FC = ({ children }) => {
     });
 
     const { token, user } = response.data;
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     await AsynStorage.multiSet([
       ['@Gobarber:token', token],
@@ -58,6 +67,12 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({});
   }, []);
 
+  const updateUser = useCallback(async (user: User) => {
+    await AsynStorage.setItem('@Gobarber:user', JSON.stringify(user));
+
+    setData(prev => ({ ...prev, user }));
+  }, []);
+
   useEffect(() => {
     async function loadStorageData() {
       const [token, user] = await AsynStorage.multiGet([
@@ -66,6 +81,7 @@ const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]) {
+        api.defaults.headers.authorization = `Bearer ${token[1]}`;
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
 
@@ -77,7 +93,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data?.user, signIn, signOut, loading }}
+      value={{ user: data?.user, signIn, signOut, updateUser, loading }}
     >
       {children}
     </AuthContext.Provider>
