@@ -27,6 +27,8 @@
   "exclude": [
     "coverage/",
     "./jest.config.js",
-    "./prettier.config.js"
+    "./prettier.config.js",
+    "./babel.config.js",
+    "./dist/"
   ]
 }
