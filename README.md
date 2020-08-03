@@ -39,8 +39,8 @@ Projeto desenvolvido durante o Bootcamp da Rocketseat, estudando NodeJS, ReactJs
 
 ### Screen web
 <p float="left">
-  <img src="./screenshots/01-login-web.png" width="300" />
-  <img src="./screenshots/02-create-account-web.png" width="300" /> 
-  <img src="./screenshots/03-update-account-web.png" width="300" />
-  <img src="./screenshots/04-manager-appointments-web.png" width="300" />
+  <img src="./screenshots/01-login-web.png" width="500" />
+  <img src="./screenshots/02-create-account-web.png" width="500" /> 
+  <img src="./screenshots/03-update-account-web.png" width="500" />
+  <img src="./screenshots/04-manager-appointments-web.png" width="500" />
 </p>
